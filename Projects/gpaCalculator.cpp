@@ -1,52 +1,69 @@
 #include <iostream>
 
-//Letter Grade Credit Values
-int A = 4;
-int B = 3;
-int C = 2;
-int D = 1;
-
 int main(){
+    using strings = std::string;
     int courseNum; 
-    //future endeavor 
+    double gpa;
+    int tempHours;
+    char letter; //User inputted letter grade
+    double points; //Combined value sum for each letter grade
+    int credit =  0; //letter credit
+    int totalHours = 0;
+
+    //Introduction: 
+    bool Yes = true;
+    bool No = false;
+    strings input;
+
+    std::cout << "-------------------------------------------------------------------" << '\n';
+    std::cout << "<---------- Welcome to Zachary Renkema's GPA Calculator ---------->" << '\n';
+    std::cout << "-------------------------------------------------------------------" << '\n';
+    std::cout << '\n';
+
+    //Start
+    std::cout << "Would you like to calculate your cumulative gpa? (Yes/No) ";
+    std::getline(std::cin >> std::ws,input) ; 
+
     std::cout << "How many courses are you taking? ";
     std::cin >> courseNum;
 
     for(int i = 1; i <= courseNum; i++){
-        char letter; //User inputted letter grade
-        double totalCredit; //Combined value sum for each letter grade
-        int credit =  0;
-
+        tempHours = 0;
         std::cout << "What was your letter grade for course " << i << " ";
         std::cin >> letter;
-
+        std::cout << "How many credit hours is this class ";
+        std::cin >> tempHours;
+        totalHours += tempHours;
+        
         switch(letter) {
             case 'A':
             case 'a':
-                credit = 4;
+                credit = tempHours * 4;
                 break;
 
             case 'B':
             case 'b':
-                credit = 3;
+                credit = tempHours * 3;
                 break; 
 
             case 'C':
             case 'c':
-                credit = 2;
+                credit = tempHours * 2;
                 break;
 
             case 'D':
             case 'd':
-                credit = 1;
+                credit = tempHours * 1;
                 break;
 
         }
-        totalCredit += credit;
-
-        std::cout << totalCredit;
+        points += credit;
+    
     }
 
-
+    gpa = (double)(points)/(double)(totalHours);
+    std::cout << "Your cumulative gpa for this semester is " << gpa << '\n';
+    //std::getchar();
+    system("pause");
     return 0;
 }
