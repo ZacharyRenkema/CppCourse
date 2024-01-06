@@ -7,7 +7,8 @@ int main() {
     using std::string; 
 
     string name = "Balls";
-
+    
+    cout << "Balls";
     
 
     return 0;
