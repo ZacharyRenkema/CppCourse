@@ -46,14 +46,16 @@ int main() {
     double readingScore = 0;
     double engagScore = 0;
     double lwScore = 0;
+    double finalScore = 0;
     bool lwRead = 0;
     
     //These variables are the number of each category. (Used for calculating the averages)
-    int numExam = 0;
+    int numExam = 1;
     int numHw = 0;
     int numReading = 0;
     int numEngag = 0;
     int numlw = 0;
+    //int numFinal = 0;
 
     string line;
     // read one line from standard input (discards the ending newline character)
@@ -73,7 +75,7 @@ int main() {
 
         } else if (category == "final-exam") {
             // TODO(student): process final score
-            examScore += score;
+            finalScore += score;
 
         } else if (category == "hw") {
             // TODO(student): process hw score
@@ -124,7 +126,15 @@ int main() {
         numExam = 1;
 
     }else{
-        exam_average = (examScore)/(numExam + 1);
+        exam_average = (examScore + finalScore)/(numExam);
+        
+        if(finalScore > exam_average) {
+            exam_average = finalScore;
+
+        }else{
+
+        }
+        
 
     }
 
