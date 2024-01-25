@@ -189,34 +189,6 @@ int main() {
 
     }
     
-    
-    // TODO(student): compute component averages
-    /*
-    exam_average = (examScore)/(numExam + 1);
-    hw_average = (hwScore)/(numHw);
-    lw_average = (lwScore)/(numlw);
-    reading = ((readingScore)/(numReading)) + 15.0;
-    
-
-    if(reading > 100){
-        reading = 100;
-
-    }else{       
-        reading = reading;
-
-    }
-
-    double engagement = ((engagScore)/(numEngag)) + 15.0;
-
-    if(engagement > 100){
-        engagement = 100;
-
-    }else{        
-        engagement = engagement;
-
-    }
-    */
-
     // TODO(student): compute weighted total of components
     double weighted_total = ((exam_average*.40)+(hw_average*.40)+(lw_average*.1)+(reading*.05)+(engagement*.05));
 
