@@ -75,7 +75,7 @@ void count_valid_mv_numbers(int a, int b)
 			}
 
 		}
-		//Three Digits
+		//Plus Two Digits
 		else if((n >= 100) && (n < 1000))
 		{
 			while(n > 0)
