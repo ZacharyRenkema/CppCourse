@@ -3,7 +3,7 @@
 
 bool is_valid_range(int a, int b);
 
-char classify_mv_range_type(int number);
+char classify_mv_range_type(int d1, int d2, int d3, int d4, int number);
 
 void count_valid_mv_numbers(int a, int b);
 
