@@ -18,10 +18,6 @@ bool is_valid_range(int a, int b)
 
 }
 
-int M = 0;
-int N = 0;
-int V = 0;
-
 
 char classify_mv_range_type(int number) //char classify_mv_range_type(int number) **original call**
 {
@@ -35,12 +31,12 @@ char classify_mv_range_type(int number) //char classify_mv_range_type(int number
 	int dig2 = 0;
 	char category = 'U'; //'U' set to initiate continuation of loop at beginning of iteration
 
-	dig1 = number % 10;
+	dig2 = number % 10;
 	number /= 10;
 
 	while(number > 0) 
 	{
-		dig2 = number % 10;
+		dig1 = number % 10;
 
 		//std::cout << number << '\n';
 		//std::cout << dig2 << '\n';
@@ -49,7 +45,7 @@ char classify_mv_range_type(int number) //char classify_mv_range_type(int number
 		//Mountain Classification
 		if(dig1 < dig2)
 		{
-			if((category == 'M') || (category == 'U'))
+			if((category == 'V') || (category == 'U'))
 			{
 				category = 'M';
 			}
@@ -61,7 +57,7 @@ char classify_mv_range_type(int number) //char classify_mv_range_type(int number
 		}
 		else if(dig1 > dig2)
 		{
-			if((category == 'V') || (category == 'U'))
+			if((category == 'M') || (category == 'U'))
 			{
 				category = 'V';
 			}
@@ -82,7 +78,7 @@ char classify_mv_range_type(int number) //char classify_mv_range_type(int number
 	switch(category) 
 	{
 		case 'M':
-			return M;
+			return 'M';
 			break;
 
 		case 'V':
@@ -186,6 +182,10 @@ void count_valid_mv_numbers(int a, int b)
 	int d3;
 	int d4;
 
+	int M = 0;
+	int N = 0;
+	int V = 0;
+
 	while(count <= b)
 	{
 		//std::cout << count << '\n';
@@ -268,7 +268,7 @@ void count_valid_mv_numbers(int a, int b)
 
 	
 	}
-	std::cout << " There are " << M << " mountain ranges and " << V << " valley ranges between " << a << " and " << b << "." << '\n';
+	std::cout << "There are " << M << " mountain ranges and " << V << " valley ranges between " << a << " and " << b << "." << '\n';
 	
 	
 }

@@ -11,11 +11,11 @@ int main()
 	//Validate range function call
 	do 
 	{
-		std::cout << "Enter numbers 10 <= a <= b < 10000:"; // << '\n';
+		std::cout << "Enter numbers 10 <= a <= b < 10000: "; // << '\n';
 		std::cin >> a >> b;
 		if(is_valid_range(a,b) != true)
 		{
-			std::cout << " Invalid Input" << '\n';
+			std::cout << "Invalid Input" << '\n';
 		}
 
 	} while(is_valid_range(a,b) != true);
