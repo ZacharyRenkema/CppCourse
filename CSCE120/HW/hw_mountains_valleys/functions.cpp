@@ -6,12 +6,13 @@ using std::cout, std::endl;
 bool is_valid_range(int a, int b) 
 {
 	// TODO(student): validate input range
-	if((a < b) && (a > 0) && (a < 10000) && (b < 10000))
+	if((a >= 10) && (a <= b) && (b < 10000))
 	{
 		return true;
 	}
 	else
 	{
+		classify_mv_range_type(a);
 		return false;
 	}
 
@@ -21,31 +22,104 @@ int M = 0;
 int N = 0;
 int V = 0;
 
-char classify_mv_range_type(int d1, int d2, int d3, int d4, int number) //char classify_mv_range_type(int number) **original call**
+
+char classify_mv_range_type(int number) //char classify_mv_range_type(int number) **original call**
 {
 /*
 <------------------------------------------------------------------------------>
 	// TODO(student): return 'M' if number has /\/\... pattern,
 	// return 'V' if number has \/\/ pattern, and return 'N' otherwise
 <------------------------------------------------------------------------------>
-*/	
+*/
+	int dig1 = 0;
+	int dig2 = 0;
+	char category = 'U'; //'U' set to initiate continuation of loop at beginning of iteration
+
+	dig2 = number % 10;
+	number /= 10;
+
+	while(number > 0) 
+	{
+		dig1 = number % 10;
+
+		//std::cout << number << '\n';
+		//std::cout << dig2 << '\n';
+		//std::cout << dig1 << '\n';
+
+		//Mountain Classification
+		if(dig1 < dig2)
+		{
+			if((category == 'M') || (category == 'U'))
+			{
+				category = 'M';
+			}
+			else
+			{
+				category = 'N';
+			}
+			
+		}
+		else if(dig1 > dig2)
+		{
+			if((category == 'V') || (category == 'U'))
+			{
+				category = 'V';
+			}
+			else{
+				category = 'N';
+			}
+		}
+		else
+		{
+			category = 'N';
+		}
+		dig2 = dig1;
+		number /= 10;
+
+
+	}
+	//Return
+	switch(category) 
+	{
+		case 'M':
+			return M;
+			break;
+
+		case 'V':
+			return 'V';
+			break;
+
+		case 'N':
+			return 'N';
+			break;
+
+		default:
+			return 'N';
+			break;
+
+	}
+
+
+}
+
+/*
 	//Two Digits
 	if((number >= 10) && (number < 100))
 	{
 		if(d1 < d2)
 		{
 			M += 1;
-			return M;
+			return 'M';
 		}
 		else if(d1 > d2)
 		{
 			V += 1;
-			return V;
+			return 'V';
 		}
 		else
 		{
 			N += 1;
-			return N;
+			return 'N';
 		}
 
 	}
@@ -55,17 +129,17 @@ char classify_mv_range_type(int d1, int d2, int d3, int d4, int number) //char c
 		if((d1 < d2) && (d2 > d3))
 		{
 			M += 1;
-			return M;
+			return 'M';
 		}
 		else if((d1 > d2) && (d2 < d3))
 		{
 			V += 1;
-			return V;
+			return 'V';
 		}
 		else
 		{
 			N += 1;
-			return N;
+			return 'N';
 		}
 	}
 	//Four Digits
@@ -74,17 +148,17 @@ char classify_mv_range_type(int d1, int d2, int d3, int d4, int number) //char c
 		if((d1 < d2) && (d2 > d3) && (d3 < d4))
 		{
 			M += 1;
-			return M;
+			return 'M';
 		}
 		else if((d1 > d2) && (d2 < d3) && (d3 > d4))
 		{
 			V += 1;
-			return V;
+			return 'V';
 		}
 		else
 		{
 			N += 1;
-			return N;
+			return 'N';
 		}
 
 	} 
@@ -93,9 +167,9 @@ char classify_mv_range_type(int d1, int d2, int d3, int d4, int number) //char c
 	{
 		return 0;
 	}
-	//std::cout << N << '\n';
-	//std::cout << M << '\n';
+
 }
+*/
 
 void count_valid_mv_numbers(int a, int b) 
 {
@@ -107,74 +181,100 @@ void count_valid_mv_numbers(int a, int b)
 <------------------------------------------------------------------------------>
 */
 	int count = a;
-	int val1; //Temporary values for calculated checking
-	int val2;
-	int val3;
-	int val4;
+	int d1; //Temporary values for calculated checking
+	int d2;
+	int d3;
+	int d4;
 
 	while(count <= b)
 	{
 		//std::cout << count << '\n';
 		int n = count;
+
+		classify_mv_range_type(count);
+
 		//Two Digits
 		if((n >= 10) && (n < 100)) 
 		{
 			//For First Number Use Integer Division
-			val1 = n / 10;
-			//std::cout << val1 << '\n';
+			d1 = n / 10;
+			d2 = n % 10;
 
-			//For Second Number Use %
-			val2 = n % 10;
-			//std::cout << val2 << '\n';
+			if(d1 < d2)
+			{
+				M += 1;
+			}
+			else if(d1 > d2)
+			{
+				V += 1;
+			}
+			else
+			{
+				N += 1;
+			}
 
-			//std::cout << n << '\n';
-
-			classify_mv_range_type(val1, val2, 0, 0, count);
-			
-
+		
 		}
 		//Three Digits
 		else if((n >= 100) && (n < 1000))
 		{
-			val3 = n % 10;
+			d3 = n % 10;
 			n /= 10;
-			val2 = n % 10;
+			d2 = n % 10;
 			n /= 10;
-			val1 = n % 10;
+			d1 = n % 10;
 			
-			/*
-			std::cout << val1 << "\n";
-			std::cout << val2 << "\n";
-			std::cout << val3 << "\n";
-			*/
-
-			classify_mv_range_type(val1, val2, val3, 0, count);
+			if((d1 < d2) && (d2 > d3))
+			{
+				M += 1;
+				
+			}
+			else if((d1 > d2) && (d2 < d3))
+			{
+				V += 1;
+			}
+			else
+			{
+				N += 1;
+			}
 			
 			
 		}
 		//4 Digits
 		else
 		{
-			val4 = n % 10;
+			d4 = n % 10;
 			n /= 10;
-			val3 = n % 10;
+			d3 = n % 10;
 			n /= 10;
-			val2 = n % 10;
+			d2 = n % 10;
 			n /= 10;
-			val1 = n % 10;
+			d1 = n % 10;
 			
-			/*
-			std::cout << val1 << "\n";
-			std::cout << val2 << "\n";
-			std::cout << val3 << "\n";
-			*/
-
-			classify_mv_range_type(val1, val2, val3, val4, count);
+			if((d1 < d2) && (d2 > d3) && (d3 < d4))
+			{
+				M += 1;
+			}
+			else if((d1 > d2) && (d2 < d3) && (d3 > d4))
+			{
+				V += 1;
+			}
+			else
+			{
+				N += 1;
+			}
 		}
 		++count;
 
-
+	cout << "There are "
 	}
-	std::cout << " There are " << M << " mountain ranges and " << V << " valley ranges between " << a << " and " << b << "." << '\n';
 	
+int totalM = totalM + M;
+int totalV = totalV + V;	
 }
+
+int totalM = totalM + M;
+int totalV = totalV + V;
+
+
+

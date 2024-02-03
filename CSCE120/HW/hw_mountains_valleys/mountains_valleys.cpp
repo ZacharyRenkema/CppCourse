@@ -25,6 +25,7 @@ int main()
 	{
 		count_valid_mv_numbers(a, b);
 	}
+	
 
 	// TODO(student): read the numbers from standard input
 
