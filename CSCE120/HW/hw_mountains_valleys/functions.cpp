@@ -35,12 +35,12 @@ char classify_mv_range_type(int number) //char classify_mv_range_type(int number
 	int dig2 = 0;
 	char category = 'U'; //'U' set to initiate continuation of loop at beginning of iteration
 
-	dig2 = number % 10;
+	dig1 = number % 10;
 	number /= 10;
 
 	while(number > 0) 
 	{
-		dig1 = number % 10;
+		dig2 = number % 10;
 
 		//std::cout << number << '\n';
 		//std::cout << dig2 << '\n';
@@ -266,15 +266,14 @@ void count_valid_mv_numbers(int a, int b)
 		}
 		++count;
 
-	cout << "There are "
-	}
 	
-int totalM = totalM + M;
-int totalV = totalV + V;	
+	}
+	std::cout << " There are " << M << " mountain ranges and " << V << " valley ranges between " << a << " and " << b << "." << '\n';
+	
+	
 }
 
-int totalM = totalM + M;
-int totalV = totalV + V;
+
 
 
 
