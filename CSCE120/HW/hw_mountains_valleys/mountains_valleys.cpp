@@ -21,10 +21,7 @@ int main()
 	} while(is_valid_range(a,b) != true);
 
 
-	if(is_valid_range(a, b) == true)
-	{
-		count_valid_mv_numbers(a, b);
-	}
+	count_valid_mv_numbers(a, b);
 	
 
 	// TODO(student): read the numbers from standard input

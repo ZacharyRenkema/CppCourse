@@ -181,6 +181,10 @@ void count_valid_mv_numbers(int a, int b)
 	int d2;
 	int d3;
 	int d4;
+	int d5;
+	int d6;
+	int d7;
+	//int d8;
 
 	int M = 0;
 	int N = 0;
@@ -241,7 +245,7 @@ void count_valid_mv_numbers(int a, int b)
 			
 		}
 		//4 Digits
-		else
+		else if((n >= 1000) && (n < 10000))
 		{
 			d4 = n % 10;
 			n /= 10;
@@ -264,6 +268,89 @@ void count_valid_mv_numbers(int a, int b)
 				N += 1;
 			}
 		}
+		else if((n >= 10000) && (n < 100000))
+		{
+			d5 = n % 10;
+			n /= 10;
+			d4 = n % 10;
+			n /= 10;
+			d3 = n % 10;
+			n /= 10;
+			d2 = n % 10;
+			n /= 10;
+			d1 = n % 10;
+			
+			if((d1 < d2) && (d2 > d3) && (d3 < d4) && (d4 > d5))
+			{
+				M += 1;
+			}
+			else if((d1 > d2) && (d2 < d3) && (d3 > d4) && (d4 < d5))
+			{
+				V += 1;
+			}
+			else
+			{
+				N += 1;
+			}
+		}
+		else if((n >= 100000) && (n < 1000000))
+		{
+			d6 = n % 10;
+			n /= 10;
+			d5 = n % 10;
+			n /= 10;
+			d4 = n % 10;
+			n /= 10;
+			d3 = n % 10;
+			n /= 10;
+			d2 = n % 10;
+			n /= 10;
+			d1 = n % 10;
+			
+			if((d1 < d2) && (d2 > d3) && (d3 < d4) && (d4 > d5) && (d5 < d6))
+			{
+				M += 1;
+			}
+			else if((d1 > d2) && (d2 < d3) && (d3 > d4) && (d4 < d5) && (d5 > d6))
+			{
+				V += 1;
+			}
+			else
+			{
+				N += 1;
+			}
+		}
+		else if((n >= 1000000) && (n < 10000000))
+		{
+			d7 = n % 10;
+			n /= 10;
+			d6 = n % 10;
+			n /= 10;
+			d5 = n % 10;
+			n /= 10;
+			d4 = n % 10;
+			n /= 10;
+			d3 = n % 10;
+			n /= 10;
+			d2 = n % 10;
+			n /= 10;
+			d1 = n % 10;
+			
+			if((d1 < d2) && (d2 > d3) && (d3 < d4) && (d4 > d5) && (d5 < d6) && (d6 > d5))
+			{
+				M += 1;
+			}
+			else if((d1 > d2) && (d2 < d3) && (d3 > d4) && (d4 < d5) && (d5 > d6) && (d6 < d7))
+			{
+				V += 1;
+			}
+			else
+			{
+				N += 1;
+			}
+			
+		}
+		
 		++count;
 
 	
