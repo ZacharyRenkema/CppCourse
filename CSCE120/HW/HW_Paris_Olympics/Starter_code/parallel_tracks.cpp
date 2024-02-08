@@ -14,6 +14,10 @@ void prep_double_array(double ary[])
 // making sure all values within the array are set to 0.0;
 {
   //TODO
+  for(int i = 0; i <= SIZE; i++)
+  {
+	ary[i] = 0.0;
+  }
 }
 
 //-------------------------------------------------------
@@ -25,6 +29,11 @@ void prep_unsigned_int_array(unsigned int ary[])
 // making sure all values within the array are set to 0;
 {
   //TODO
+  for(int i = 0; i <= SIZE; i++)
+  {
+	ary[i] = 0;
+  }
+
 }
 
 //-------------------------------------------------------
@@ -36,6 +45,10 @@ void prep_string_array(char ary[][STRING_SIZE])
 // making sure all values within the array are set to "N/A";
 {
 	//TODO
+	for(int i = 0; i <= SIZE; i++)
+	{
+		ary[i][SIZE] = "N/A";
+	}
 }
 
 //-------------------------------------------------------
@@ -45,6 +58,11 @@ void prep_string_array(char ary[][STRING_SIZE])
 //---------------------------------------------------------
 void trim(char str[STRING_SIZE]) {
 	// TODO
+	int i = 0;
+	while(str[i] != '/0')
+	{
+		if(str[i] == " ")
+	}
 }
 
 //-------------------------------------------------------

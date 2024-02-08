@@ -32,7 +32,20 @@ using std::cin; using std::cout; using std::endl;
 int main()
 {
     // TODO: create arrays needed
-	
+    double time[SIZE] = {};
+    unsigned int jerseyNumber[SIZE] = {};
+    unsigned int ranking[SIZE] = {};
+    char country[STRING_SIZE] = {};
+    char lastName[STRING_SIZE] = {};
+
+    prep_double_array(time);
+    prep_unsigned_int_array(jerseyNumber);
+    prep_unsigned_int_array(ranking);
+    //prep_string_array(country[STRING_SIZE]);
+
+    
+    //std::cout << time[1];
+
     // TOTO: prep all arrays
 	
     // TODO: load the runner's data into the array
