@@ -16,7 +16,7 @@ void prep_double_array(double ary[])
   //TODO
   for(int i = 0; i <= SIZE; i++)
   {
-	ary[i] = 0.0;
+	ary[i] = {0.0};
   }
 }
 
@@ -31,7 +31,7 @@ void prep_unsigned_int_array(unsigned int ary[])
   //TODO
   for(int i = 0; i <= SIZE; i++)
   {
-	ary[i] = 0;
+	ary[i] = {0};
   }
 
 }
@@ -47,9 +47,9 @@ void prep_string_array(char ary[][STRING_SIZE])
 	//TODO
 	for(int i = 0; i <= SIZE; i++)
 	{
-		ary[i][SIZE] = "N/A";
+		ary = {"N/A"};
 	}
-}
+} 
 
 //-------------------------------------------------------
 // Name: trim
@@ -58,11 +58,6 @@ void prep_string_array(char ary[][STRING_SIZE])
 //---------------------------------------------------------
 void trim(char str[STRING_SIZE]) {
 	// TODO
-	int i = 0;
-	while(str[i] != '/0')
-	{
-		if(str[i] == " ")
-	}
 }
 
 //-------------------------------------------------------

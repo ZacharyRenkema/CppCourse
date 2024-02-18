@@ -35,15 +35,29 @@ int main()
     double time[SIZE] = {};
     unsigned int jerseyNumber[SIZE] = {};
     unsigned int ranking[SIZE] = {};
-    char country[STRING_SIZE] = {};
-    char lastName[STRING_SIZE] = {};
+    char country[SIZE][STRING_SIZE] = {};
+    char lastName[SIZE][STRING_SIZE] = {};
 
-    prep_double_array(time);
-    prep_unsigned_int_array(jerseyNumber);
-    prep_unsigned_int_array(ranking);
-    //prep_string_array(country[STRING_SIZE]);
+    //Prep Ints
+    for(int i = 0; i <= SIZE; i++)
+    {
+        unsigned int tempNum = jerseyNumber[i];
 
-    
+        prep_unsigned_int_array(tempNum);
+        prep_unsigned_int_array(ranking);
+    }
+    //C-String Prep
+    for(int j = 0; j <= STRING_SIZE; j++)
+    {
+        prep_string_array(country);
+        prep_string_array(lastName);
+    }
+    //Double Prep
+    for(int k = 0; k <= SIZE; k++)
+    {
+        prep_double_array(time);
+    }
+  
     //std::cout << time[1];
 
     // TOTO: prep all arrays

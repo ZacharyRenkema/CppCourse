@@ -61,19 +61,24 @@ int BoxesNeeded(int apples)
 }
 bool SmarterSection(int A_correct, int A_total, int B_correct, int B_total) 
 {
-    if (A_total < 0 && B_total < 0) 
+    if (A_total <= 0 
+    || B_total <= 0 
+    || A_correct > A_total 
+    || B_correct > B_total
+    || A_correct < 0
+    || B_correct < 0
+    ) 
     {
         throw std::invalid_argument("");
         //return std::invalid_argument("");
     } 
-    if ((static_cast<double>(A_correct) / static_cast<double>(A_total)) > (static_cast<double>(B_correct) / static_cast<double>(B_total))) 
+    else if ((static_cast<double>(A_correct) / static_cast<double>(A_total)) > (static_cast<double>(B_correct) / static_cast<double>(B_total))) 
     {
         return true;
     } 
     else 
     {
         return false;
-
     }
 
 }
@@ -89,7 +94,7 @@ bool GoodDinner(int pizzas, bool is_weekend)
     return false;
   }
 }
-/*
+
 int SumBetween(int low, int high) 
 {
   int value = 0;
@@ -108,13 +113,14 @@ int SumBetween(int low, int high)
     if((low < 0 && high < 2147483647 - low) || (high > 0 && low > 2147483647 - high))
     {
       throw std::overflow_error("");
-    }
+    } 
     value += n;
   }
   return value;
 
 }
-*/
+
+/*
 int SumBetween(int low, int high) {
     int value = 0;
 
@@ -140,6 +146,7 @@ int SumBetween(int low, int high) {
 
     return value;
 }
+*/
 
 int Product(int a, int b) 
 {
