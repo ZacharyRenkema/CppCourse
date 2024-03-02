@@ -5,6 +5,12 @@
 
 using std::cin, std::cout, std::endl;
 
+/*
+void prep_double_array(double ary[]);
+void prep_unsigned_int_array(unsigned int ary[]);
+void prep_string_array(char ary[][STRING_SIZE]);
+*/
+
 //-------------------------------------------------------
 // Name: prep_double_array
 // PreCondition:  an array of doubles is passed in
@@ -47,7 +53,7 @@ void prep_string_array(char ary[][STRING_SIZE])
 	//TODO
 	for(int i = 0; i <= SIZE; i++)
 	{
-		ary = {"N/A"};
+		ary[i][STRING_SIZE] = '\0';
 	}
 } 
 

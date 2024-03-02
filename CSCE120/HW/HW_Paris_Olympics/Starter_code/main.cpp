@@ -29,21 +29,23 @@ Input information format
 
 using std::cin; using std::cout; using std::endl;
 
+void prep_double_array(double ary[]);
+void prep_unsigned_int_array(unsigned int ary[]);
+void prep_string_array(char ary[][STRING_SIZE]);
+
 int main()
 {
     // TODO: create arrays needed
-    double time[SIZE] = {};
-    unsigned int jerseyNumber[SIZE] = {};
-    unsigned int ranking[SIZE] = {};
-    char country[SIZE][STRING_SIZE] = {};
-    char lastName[SIZE][STRING_SIZE] = {};
+    double time[SIZE] = {0.0};
+    unsigned int jerseyNumber[SIZE] = {0};
+    unsigned int ranking[SIZE] = {0};
+    char country = 'N/A';
+    char lastName = 'N/A';
 
     //Prep Ints
     for(int i = 0; i <= SIZE; i++)
     {
-        unsigned int tempNum = jerseyNumber[i];
-
-        prep_unsigned_int_array(tempNum);
+        prep_unsigned_int_array(jerseyNumber);
         prep_unsigned_int_array(ranking);
     }
     //C-String Prep
