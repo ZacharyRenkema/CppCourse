@@ -23,8 +23,19 @@ void initializeImage(Pixel image[][MAX_HEIGHT])
 void loadImage(string filename, Pixel image[][MAX_HEIGHT], unsigned int& width, unsigned int& height) 
 {
   // TODO: implement (part 1)
+  //Opening File
+
+  std::ifstream fileStream;
+  fileStream.open(filename);
+
+  if(!fileStream.is_open())
+  {
+    throw std::runtime_error("Failed to open " + filename);
+  }
+
+  if()
   
-  
+
 }
 
 void outputImage(string filename, Pixel image[][MAX_HEIGHT], unsigned int width, unsigned int height) 
