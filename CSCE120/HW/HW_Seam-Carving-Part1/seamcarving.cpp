@@ -44,6 +44,13 @@ int main() {
   // Exit program with error if there are problems with 
   //   targetWidth or targetHeight
 
+  if(targetWidth < 0 || targetWidth > width 
+  || targetHeight < 0 || targetHeight > height)
+  {
+    std::cout << "Invalid target dimensions" << std::endl;
+    return 1; // Exit with an error
+  }
+
   cout << "Start carving..." << endl;
   
   // TODO: uncomment functions in the following while loop

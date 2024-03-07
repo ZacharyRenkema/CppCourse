@@ -140,11 +140,54 @@ void outputImage(string filename, Pixel image[][MAX_HEIGHT], unsigned int width,
   outFile.close();
 }
 
-unsigned int energy(Pixel image[][MAX_HEIGHT], unsigned int x, unsigned int y, unsigned int width, unsigned int height) 
-{
-  // TODO: implement (part 1)
-  return 0;
+unsigned int energy(Pixel image[][MAX_HEIGHT], unsigned int x, unsigned int y, unsigned int width, unsigned int height) {
+    int Rx, Ry, Gx, Gy, Bx, By;
+    unsigned int delta_x, delta_y;
+
+    if (x == 0) // Left border
+    {
+        Rx = image[(x + 1) % width][y].r - image[width - 1][y].r;
+        Gx = image[(x + 1) % width][y].g - image[width - 1][y].g;
+        Bx = image[(x + 1) % width][y].b - image[width - 1][y].b;
+    }
+    else if (x == width - 1) // Right border
+    {
+        Rx = image[0][y].r - image[x - 1][y].r;
+        Gx = image[0][y].g - image[x - 1][y].g;
+        Bx = image[0][y].b - image[x - 1][y].b;
+    }
+    else // Non-border case
+    {
+        Rx = image[x + 1][y].r - image[x - 1][y].r;
+        Gx = image[x + 1][y].g - image[x - 1][y].g;
+        Bx = image[x + 1][y].b - image[x - 1][y].b;
+    }
+
+    if (y == 0) // Top border
+    {
+        Ry = image[x][(y + 1) % height].r - image[x][height - 1].r;
+        Gy = image[x][(y + 1) % height].g - image[x][height - 1].g;
+        By = image[x][(y + 1) % height].b - image[x][height - 1].b;
+    }
+    else if (y == height - 1) // Bottom border
+    {
+        Ry = image[x][0].r - image[x][y - 1].r;
+        Gy = image[x][0].g - image[x][y - 1].g;
+        By = image[x][0].b - image[x][y - 1].b;
+    }
+    else // Non-border case
+    {
+        Ry = image[x][(y + 1) % height].r - image[x][(y - 1)].r;
+        Gy = image[x][(y + 1) % height].g - image[x][(y - 1)].g;
+        By = image[x][(y + 1) % height].b - image[x][(y - 1)].b;
+    }
+
+    delta_x = Rx * Rx + Gx * Gx + Bx * Bx;
+    delta_y = Ry * Ry + Gy * Gy + By * By;
+
+    return delta_x + delta_y;
 }
+
 
 // uncomment functions as you implement them (part 2)
 
