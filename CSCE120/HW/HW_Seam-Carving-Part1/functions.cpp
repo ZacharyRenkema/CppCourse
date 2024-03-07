@@ -58,27 +58,29 @@ void loadImage(string filename, Pixel image[][MAX_HEIGHT], unsigned int& width, 
 
     unsigned int i;
     unsigned int j;
+    unsigned int pixel;
 
     for(i = 0; i < height; ++i)
     {
       for(j = 0; j < width; ++j)
       {
-        fileStream >> red >> green >> blue;
-        /*
+        //fileStream >> red >> green >> blue;
+       
         if (!(fileStream >> red >> green >> blue)) 
         {
           // If not, throw an exception indicating too few values
           throw std::runtime_error("Invalid color value");
         }
-        */
-        if((red < 256 && red > 0)
-        && (green < 256 && green > 0) 
-        && (blue < 256 && blue > 0))
+        
+        if((red < 256 && red >= 0)
+        && (green < 256 && green >= 0) 
+        && (blue < 256 && blue >= 0))
         {
           image[j][i].r = red;
           image[j][i].g = green;
           image[j][i].b = blue;
         
+          //pixel++;
         }
         else
         {
@@ -88,16 +90,11 @@ void loadImage(string filename, Pixel image[][MAX_HEIGHT], unsigned int& width, 
       }
       
     }
-    
-    if(((j * i) < (width * height)) && ((j * i) % 3 != 0))
-    {
-      throw std::runtime_error("Invalid color value");
-    }
-    else if(((j * i) > (MAX_WIDTH * MAX_HEIGHT)) && ((j * i) % 3 != 0))
+    if (fileStream >> red) 
     {
       throw std::runtime_error("Too many values");
     }
-    
+
   }
   else
   {
@@ -111,6 +108,36 @@ void loadImage(string filename, Pixel image[][MAX_HEIGHT], unsigned int& width, 
 void outputImage(string filename, Pixel image[][MAX_HEIGHT], unsigned int width, unsigned int height) 
 {
   // TODO: implement (part 1)
+  std::ofstream outFile;
+  std::string outFileType = "P3";
+  int maxColor = 255;
+
+  outFile.open(filename);
+
+  if(!outFile.is_open())
+  {
+    throw std::runtime_error("Failed to open " + filename);
+  }
+  //outFile << "P3\n" << width << " " << height << "\n255\n";
+  
+  outFile << outFileType << '\n';
+  outFile << width << " " << height << " " << '\n';
+  outFile << maxColor << '\n';
+
+  for(unsigned int i = 0; i < height; ++i)
+  {
+    for(unsigned int j = 0; j < width; ++j)
+    {
+      outFile << image[j][i].r << " ";
+      outFile << image[j][i].g << " ";
+      outFile << image[j][i].b << " ";
+    }
+    outFile << '\n';
+    
+  }
+  
+
+  outFile.close();
 }
 
 unsigned int energy(Pixel image[][MAX_HEIGHT], unsigned int x, unsigned int y, unsigned int width, unsigned int height) 
