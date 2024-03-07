@@ -2,19 +2,24 @@
 #include "functions.h"
 using namespace std;
 
-void function_one(/* TODO: fill with the appropriate arguments */) {
+void function_one(int i, int &j) {
 	// TODO: implement function_one so that it takes two integer arguments i and j, adds 2 to i,
     // adds 1 to j, (after execution of the function, only j is changed)
+    i += 2;
+    j += 1;
 }
 
-void function_two(/* TODO: fill with the appropriate arguments */) {
+void function_two(example& num) {
     // TODO: implement function_two so that it takes an argument of type example, and increments
     // its integer by 1 (should persist after the function)
+    num.value++;
 }
 
 void function_three(int* k, int& l) {
     // TODO: implement function_three so that it increments both variables by one (both changes must
     // persist after the function call)
+    (*k)++;
+    l++;
 }
 
 void function_four(/* TODO: fill with the appropriate arguments */) {
