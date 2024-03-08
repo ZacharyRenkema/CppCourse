@@ -191,11 +191,20 @@ unsigned int energy(Pixel image[][MAX_HEIGHT], unsigned int x, unsigned int y, u
 
 // uncomment functions as you implement them (part 2)
 
-// unsigned int loadVerticalSeam(Pixel image[][MAX_HEIGHT], unsigned int start_col, unsigned int width, unsigned int height, unsigned int seam[]) {
-//   // TODO: implement (part 2)
-//   return 0;
-// }
+unsigned int loadVerticalSeam(Pixel image[][MAX_HEIGHT], unsigned int start_col, unsigned int width, unsigned int height, unsigned int seam[]) 
+{
+// TODO: implement (part 2)
+  for(int x = 0; x < width; ++x)
+  {
+    for(int y = 0; y < height; ++y)
+    {
+      //image[]
+    }
 
+  return 0;
+  }
+
+}
 // unsigned int loadHorizontalSeam(Pixel image[][MAX_HEIGHT], unsigned int start_row, unsigned int width, unsigned int height, unsigned int seam[]) {
 //   // TODO: implement (part 2)
 //   return 0;
