@@ -19,6 +19,7 @@ int main() {
   unsigned int height = 0;
   int targetWidth = 0;
   int targetHeight = 0;
+  unsigned int seam[MAX_HEIGHT];
   
   // accept filename
   cout << "Input filename: ";
@@ -52,6 +53,8 @@ int main() {
   }
 
   cout << "Start carving..." << endl;
+
+  //loadVerticalSeam(image, 3, width, height, seam);
   
   // TODO: uncomment functions in the following while loop
   //       as you implement (part 2)

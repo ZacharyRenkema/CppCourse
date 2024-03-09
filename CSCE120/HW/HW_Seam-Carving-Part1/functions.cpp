@@ -190,21 +190,59 @@ unsigned int energy(Pixel image[][MAX_HEIGHT], unsigned int x, unsigned int y, u
 
 
 // uncomment functions as you implement them (part 2)
-
+/**/
 unsigned int loadVerticalSeam(Pixel image[][MAX_HEIGHT], unsigned int start_col, unsigned int width, unsigned int height, unsigned int seam[]) 
 {
 // TODO: implement (part 2)
-  for(int x = 0; x < width; ++x)
+  int totEnergy;
+  int smallestEnergy;
+
+  int y = 0;
+  int current = start_col;
+  totEnergy = energy(image, start_col, y, width, height);
+  for(int y = 0; y < height; ++y)
   {
-    for(int y = 0; y < height; ++y)
+    //totEnergy = energy(image, start_col, y, width, height);
+    seam[y] = current;
+
+    int below = energy(image, start_col, y + 1, width, height);
+    int belowLeft = energy(image, start_col + 1, y + 1, width, height);
+    int belowRight = energy(image, start_col - 1, y + 1, width, height);
+
+    if((below < belowLeft) && (below < belowRight))
     {
-      //image[]
+      totEnergy += below;
+      current += 0;
+    }
+    else if((belowRight < belowLeft) && (belowRight < below))
+    {
+      totEnergy += belowRight;
+      current -= 1;
+    }
+    else if((belowLeft < belowRight) && (belowLeft < below))
+    {
+      totEnergy += belowLeft;
+      current += 1;
     }
 
-  return 0;
+    //Check if any are the same
+
+    
+
+
+    /*
+    std::cout << below << '\n';
+    std::cout << belowLeft << '\n';
+    std::cout << belowRight << '\n';
+    */
   }
 
+
+
+  return totEnergy;
 }
+
+
 // unsigned int loadHorizontalSeam(Pixel image[][MAX_HEIGHT], unsigned int start_row, unsigned int width, unsigned int height, unsigned int seam[]) {
 //   // TODO: implement (part 2)
 //   return 0;
