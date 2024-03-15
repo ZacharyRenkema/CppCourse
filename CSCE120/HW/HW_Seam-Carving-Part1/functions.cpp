@@ -190,59 +190,68 @@ unsigned int energy(Pixel image[][MAX_HEIGHT], unsigned int x, unsigned int y, u
 
 
 // uncomment functions as you implement them (part 2)
-/**/
+
 unsigned int loadVerticalSeam(Pixel image[][MAX_HEIGHT], unsigned int start_col, unsigned int width, unsigned int height, unsigned int seam[]) 
 {
-// TODO: implement (part 2)
-  int totEnergy;
-  int smallestEnergy;
+    int totEnergy = 0;
+    int current = start_col;
+    int y = 0;
 
-  int y = 0;
-  int current = start_col;
-  totEnergy = energy(image, start_col, y, width, height);
-  for(int y = 0; y < height; ++y)
-  {
-    //totEnergy = energy(image, start_col, y, width, height);
-    seam[y] = current;
-
-    int below = energy(image, start_col, y + 1, width, height);
-    int belowLeft = energy(image, start_col + 1, y + 1, width, height);
-    int belowRight = energy(image, start_col - 1, y + 1, width, height);
-
-    if((below < belowLeft) && (below < belowRight))
+    for(y = 0; y < height - 1; ++y)
     {
-      totEnergy += below;
-      current += 0;
+        seam[y] = current;
+        totEnergy += energy(image, current, y, width, height);
+
+        int below = energy(image, current, y + 1, width, height);
+        int belowRight = 999999999;
+        int belowLeft = 999999999;
+
+        if (current + 1 < width) {
+            belowRight = energy(image, current + 1, y + 1, width, height);
+        }
+
+        if (current > 0) {
+            belowLeft = energy(image, current - 1, y + 1, width, height);
+        }
+
+        int nextColumn = current;
+        if (below < belowRight && below < belowLeft)
+        {
+            nextColumn = current;
+        }
+        else if (belowRight < below && belowRight < belowLeft)
+        {
+            nextColumn = current + 1;
+        }
+        else if (belowLeft < below && belowLeft < belowRight)
+        {
+            nextColumn = current - 1;
+        }
+        else
+        {
+            if (below <= belowLeft && below <= belowRight)
+            {
+                nextColumn = current;
+            }
+            else if (belowLeft <= below && belowLeft <= belowRight)
+            {
+                nextColumn = current - 1;
+            }
+            else if (belowRight <= below && belowRight <= belowLeft)
+            {
+                nextColumn = current + 1;
+            }
+        }
+
+        //seam[y + 1] = nextColumn;
+        //std::cout << seam[y];
+        current = nextColumn;
     }
-    else if((belowRight < belowLeft) && (belowRight < below))
-    {
-      totEnergy += belowRight;
-      current -= 1;
-    }
-    else if((belowLeft < belowRight) && (belowLeft < below))
-    {
-      totEnergy += belowLeft;
-      current += 1;
-    }
 
-    //Check if any are the same
+    totEnergy += energy(image, current, height - 1, width, height);
 
-    
-
-
-    /*
-    std::cout << below << '\n';
-    std::cout << belowLeft << '\n';
-    std::cout << belowRight << '\n';
-    */
-  }
-
-
-
-  return totEnergy;
+    return totEnergy;
 }
-
-
 // unsigned int loadHorizontalSeam(Pixel image[][MAX_HEIGHT], unsigned int start_row, unsigned int width, unsigned int height, unsigned int seam[]) {
 //   // TODO: implement (part 2)
 //   return 0;
