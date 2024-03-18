@@ -1,6 +1,4 @@
-# include "functions.h"
-//# include <cstring> 
-// add any includes
+#include "functions.h"
 #include <string>
 #include <iostream>
 
@@ -9,6 +7,16 @@ using std::cout, std::cin, std::endl, std::string;
 void deobfuscate() 
 {
     // TODO
+    std::string sentence;
+    int details;
+
+    std::cout << "Please enter obfuscated sentence: " << std::endl;
+    std::getline(std::cin, sentence);
+
+    std::cout << "Please enter deobfuscation details: " << std::endl;
+    std::cin >> details;
+
+
 
 }
 
@@ -23,9 +31,11 @@ void wordFilter()
     std::cout << "Please enter the filter word: ";
     std::cin >> filter;
 
-    for (int i = 0; i < sentence.length(); ++i) 
+    sentence.resize(sentence.length());
+
+    for (size_t i = 0; i < sentence.length(); ++i) 
     {
-        int found = sentence.find(filter, i); 
+        size_t found = sentence.find(filter, i); 
 
         if (found != std::string::npos) 
         {
@@ -35,7 +45,7 @@ void wordFilter()
             }
             i = found + filter.length() - 1; 
         }
-        std::cout << i << endl;
+        //std::cout << sentence.length() << endl;
     }
 
     std::cout << "Filtered sentence: " << sentence << std::endl;
@@ -44,7 +54,6 @@ void wordFilter()
 void passwordConverter() 
 {
     // TODO
-    
     std::string password;
     std::string original;
     std::string modified;
