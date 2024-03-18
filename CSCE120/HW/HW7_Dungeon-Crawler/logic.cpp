@@ -16,7 +16,25 @@ using std::cout, std::endl, std::ifstream, std::string;
  * @return  pointer to 2D dynamic array representation of dungeon map with player's location., or nullptr if loading fails for any reason
  * @updates  maxRow, maxCol, player
  */
-char** loadLevel(const string& fileName, int& maxRow, int& maxCol, Player& player) {
+char** loadLevel(const string& fileName, int& maxRow, int& maxCol, Player& player) 
+{
+    //Open and read file
+    std::ifstream level;
+
+    level.open(fileName);
+    level >> maxRow;
+    level >> maxCol;
+    if(!level.is_open())
+    {
+        return nullptr;
+    }
+
+    if((maxRow < 0) || (maxCol < 0) ||
+    (maxRow > 999999) || (maxCol > 999999))
+    {
+        return nullptr;
+    }
+
     return nullptr;
 }
 
