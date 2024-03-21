@@ -12,6 +12,14 @@ using std::cin, std::cout, std::endl, std::ostream, std::string;
  */
 void push(Stack& stack, int number) {
   // TODO: implement push function for stack
+  int doubledCap = stack.capacity;
+
+  if(stack.count == stack.capacity) //If at full cap resize array
+  {
+    stack
+  }
+
+
   INFO_STRUCT(stack);
   INFO(number);
 }
