@@ -12,7 +12,7 @@ int main() {
   
   //TODO: create a command-line interface for calculator GUI
   push(stack,5);
-  push(stack,10);
+  //push(stack,10);
 
     
 

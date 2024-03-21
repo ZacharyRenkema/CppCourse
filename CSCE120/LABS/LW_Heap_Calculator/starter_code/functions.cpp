@@ -12,22 +12,32 @@ using std::cin, std::cout, std::endl, std::ostream, std::string;
  */
 void push(Stack& stack, int number) {
   // TODO: implement push function for stack
-  //Stack stack;
-  stack.numbers = new int[stack.count] {1};
+  Stack newStack;
+  //stack.numbers = new int[stack.count] {1};
   int doubledCap = stack.capacity * 2;
-  int i = stack.count;
 
   if(stack.count == stack.capacity) //If at full cap resize array
   {
-    stack.numbers = new int[doubledCap];
-    stack.capacity = doubledCap;
-    stack.count += 1;
+    //Point pointer to new array location
+    newStack.numbers = new int[doubledCap]; //New Array in heap
+
+    //Copy location
+    for(int i = 0; i <= stack.capacity; ++i) 
+    {
+      newStack.numbers[i] = stack.numbers[i];
+      std::cout << newStack.numbers;
+    }
+    delete[] stack.numbers; //Delete old memory address
+    stack.capacity = doubledCap; //Set original capicity to doubled cap.
+    stack.numbers = newStack.numbers; //Reassign pointer to new address
   }
-  stack.numbers[i + 1] = number;
-  
+  //No need for resizing
+  stack.numbers[stack.count + 1] = number;
   std::cout << stack.numbers << std::endl;
   
+  //Return storage from heap
   delete[] stack.numbers;
+  delete[] newStack.numbers;
   INFO_STRUCT(stack);
   INFO(number);
 }
