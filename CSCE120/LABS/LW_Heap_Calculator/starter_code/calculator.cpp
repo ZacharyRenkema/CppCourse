@@ -11,10 +11,7 @@ int main() {
   cout << "> ";
   
   //TODO: create a command-line interface for calculator GUI
-  push(stack,5);
-  //push(stack,10);
 
-    
-
+  delete[] stack.numbers; 
   return 0;
 }
