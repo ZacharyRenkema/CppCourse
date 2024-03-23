@@ -19,41 +19,45 @@ using std::cout, std::endl, std::ifstream, std::string;
 char** loadLevel(const string& fileName, int& maxRow, int& maxCol, Player& player) 
 {
     //Open and read file
-    std::ifstream level;
-    level.open(fileName);
-    level >> maxRow;
-    level >> maxCol;
-    level >> player.row;
-    level >> player.col;
+    std::ifstream levelDungeon;
+    levelDungeon.open(fileName);
 
+    if(!levelDungeon.is_open())
+    {
+        //std::cout << "fileOpen error" << std::endl;
+        return nullptr;
+    }   
+    levelDungeon >> maxRow;
+    levelDungeon >> maxCol;
+    levelDungeon >> player.row;
+    levelDungeon >> player.col;
+    /*
     std::cout << maxRow << std::endl;
     std::cout << maxCol << std::endl;
     std::cout << player.row << std::endl;
     std::cout << player.col << std::endl;
-    /*
-    if(!level.is_open())
+    */
+    if(((2147483647 / double(maxRow)) < maxCol)|| 
+    ((2147483647 / double(maxCol)) < maxRow) ||
+    (maxRow <= 0) || (maxCol <= 0) || 
+    (maxRow > 999999) || (maxCol > 999999) || 
+    ((maxRow * maxCol) > 2147483647) ||(maxRow == 0) ||
+    (player.row < 0) || (player.row > maxRow) || 
+    (player.col < 0 ) || (player.col > maxCol)) 
     {
-        return nullptr;
-    }   
-    if((maxRow <= 0) || (maxCol <= 0) || 
-    (maxRow > 999999) || (maxCol > 999999) ||
-    ((maxRow * maxCol) < 2147483647) ||
-    (maxRow == 0) ) 
-    {
-        level.close();
+        levelDungeon.close();
         return nullptr;
     }
-    */
     //Load Level
     char** levelMap = createMap(maxRow, maxCol);
-    for(size_t row = 0; row < maxRow; ++row)
+    for(size_t row = 0; row < maxRow; row++)
     {
-        for(int col = 0; col < maxCol; ++col)
+        for(size_t col = 0; col < maxCol; col++)
         {
             // Read character from file
             char tile;
-            level >> tile;
-            
+            levelDungeon >> tile;
+            std::cout << "Read tile: " << tile << " at row: " << row << ", col: " << col << std::endl;
             // Check if character is valid
             if(!(tile == TILE_OPEN || tile == TILE_PLAYER ||
                  tile == TILE_TREASURE || tile == TILE_AMULET ||
@@ -62,10 +66,9 @@ char** loadLevel(const string& fileName, int& maxRow, int& maxCol, Player& playe
             {
                 // Invalid character
                 deleteMap(levelMap, maxRow);
-                level.close();
+                levelDungeon.close();
                 return nullptr;
-            }
-            
+            }       
             // Assign character to level map
             levelMap[row][col] = tile;
         }
@@ -74,7 +77,8 @@ char** loadLevel(const string& fileName, int& maxRow, int& maxCol, Player& playe
     // Set player position
     levelMap[player.row][player.col] = TILE_PLAYER;
 
-    level.close();
+    //deleteMap(levelMap, maxRow);
+    levelDungeon.close();
     return levelMap;
     /*
     char** levelMap = new char*[maxCol];
@@ -103,8 +107,34 @@ char** loadLevel(const string& fileName, int& maxRow, int& maxCol, Player& playe
  * @param   nextCol     Player's next column on dungeon map (left/right).
  * @updates  nextRow, nextCol
  */
-void getDirection(char input, int& nextRow, int& nextCol) {
-    
+void getDirection(char input, int& nextRow, int& nextCol) 
+{
+    //Starting player row and column
+    //std::cout << nextRow << std::endl;
+
+    switch(input) {
+        case MOVE_UP:
+            nextRow -= 1;
+            break;
+
+        case MOVE_DOWN:
+            nextRow += 1;
+            break;
+
+        case MOVE_LEFT:
+            nextCol -= 1;
+            break;
+
+        case MOVE_RIGHT:
+            nextCol += 1;
+            break;
+
+        case INPUT_QUIT:
+            break;
+
+        default:
+            break;
+    }
 }
 
 /**
@@ -115,11 +145,16 @@ void getDirection(char input, int& nextRow, int& nextCol) {
  * @param   maxCol      Number of columns in the dungeon table (aka width).
  * @return  2D map array for the dungeon level, holds char type.
  */
-char** createMap(int maxRow, int maxCol) {
+char** createMap(int maxRow, int maxCol) 
+{
     char** levelMap = new char*[maxRow];
     for(size_t i = 0; i < maxRow; ++i)
     {
         levelMap[i] = new char[maxCol];
+        for(size_t j = 0; j < maxCol; ++j)
+        {
+            levelMap[i][j] = TILE_OPEN;
+        }
     }
      
     return levelMap;
@@ -135,12 +170,17 @@ char** createMap(int maxRow, int maxCol) {
  */
 void deleteMap(char**& map, int& maxRow) {
     //Deallocate Memory
-    for(size_t row = 0; row < maxRow; ++row)
+    if(map != nullptr)
     {
-        delete[] map[row];
+        for(size_t row = 0; row < maxRow; ++row)
+        {
+            delete[] map[row];
+        }
+        delete[] map;
+        map = nullptr;
+        
     }
-    delete[] map;
-
+    maxRow = 0;
 }
 
 /**
@@ -176,7 +216,13 @@ char** resizeMap(char** map, int& maxRow, int& maxCol) {
  * @return  Player's movement status after updating player's position.
  * @update map contents, player
  */
-int doPlayerMove(char** map, int maxRow, int maxCol, Player& player, int nextRow, int nextCol) {
+int doPlayerMove(char** map, int maxRow, int maxCol, Player& player, int nextRow, int nextCol) 
+{
+    //Check if player hits wall or pillar
+
+
+
+
     return 0;
 }
 
