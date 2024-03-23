@@ -18,9 +18,6 @@ using std::cout, std::endl, std::ifstream, std::string;
  */
 char** loadLevel(const string& fileName, int& maxRow, int& maxCol, Player& player) 
 {
-    //Init of 2D Array
-    char levelMap[maxCol][maxRow] = {}; //Remember to assign pointer address later ** 
-
     //Open and read file
     std::ifstream level;
     level.open(fileName);
@@ -40,17 +37,29 @@ char** loadLevel(const string& fileName, int& maxRow, int& maxCol, Player& playe
         return nullptr;
     }
     //Load Level
-    for(int i = 0; i <= maxCol; ++i)
+    char** levelMap = new char*[maxCol];
+    for(size_t i = 0; i < maxCol; ++i)
     {
-        for(int j = 0; j <= maxRow; ++j)
+        levelMap[i] = new char[maxRow];
+    }
+
+    for(size_t col = 0; col < maxCol; ++col)
+    {
+        for(int row = 0; row < maxRow; ++row)
         {
-            level >> levelMap[i][j]; 
+            level >> levelMap[col][row]; 
         }
     }
-    //std::cout << levelMap << std::endl;
-    //p_map = &map;
 
-    return nullptr;
+    //Deallocate Memory
+    for(size_t col = 0; col < maxCol; ++col)
+    {
+        delete[] levelMap[col];
+    }
+    delete[] levelMap;
+
+    level.close();
+    return levelMap;
 }
 
 /**
