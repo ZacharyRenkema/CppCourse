@@ -27,16 +27,12 @@ char** loadLevel(const string& fileName, int& maxRow, int& maxCol, Player& playe
         //std::cout << "fileOpen error" << std::endl;
         return nullptr;
     }   
+
     levelDungeon >> maxRow;
     levelDungeon >> maxCol;
     levelDungeon >> player.row;
     levelDungeon >> player.col;
-    /*
-    std::cout << maxRow << std::endl;
-    std::cout << maxCol << std::endl;
-    std::cout << player.row << std::endl;
-    std::cout << player.col << std::endl;
-    */
+
     if(((2147483647 / double(maxRow)) < maxCol)|| 
     ((2147483647 / double(maxCol)) < maxRow) ||
     (maxRow <= 0) || (maxCol <= 0) || 
@@ -57,7 +53,7 @@ char** loadLevel(const string& fileName, int& maxRow, int& maxCol, Player& playe
             // Read character from file
             char tile;
             levelDungeon >> tile;
-            std::cout << "Read tile: " << tile << " at row: " << row << ", col: " << col << std::endl;
+            //std::cout << "Read tile: " << tile << " at row: " << row << ", col: " << col << std::endl;
             // Check if character is valid
             if(!(tile == TILE_OPEN || tile == TILE_PLAYER ||
                  tile == TILE_TREASURE || tile == TILE_AMULET ||
