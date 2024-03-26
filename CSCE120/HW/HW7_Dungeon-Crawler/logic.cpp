@@ -39,7 +39,8 @@ char** loadLevel(const string& fileName, int& maxRow, int& maxCol, Player& playe
     (maxRow > 999999) || (maxCol > 999999) || 
     ((maxRow * maxCol) > 2147483647) ||(maxRow == 0) ||
     (player.row < 0) || (player.row > maxRow) || 
-    (player.col < 0 ) || (player.col > maxCol)) 
+    (player.col < 0 ) || (player.col > maxCol) ||
+    (levelDungeon.eof())) 
     {
         levelDungeon.close();
         return nullptr;
@@ -186,7 +187,7 @@ char** resizeMap(char** map, int& maxRow, int& maxCol)
 
     //init newMap with doubled size
     char** newMap = new char*[doubledRow] {};
-    for(int i = 0; i < doubledCol; ++i)
+    for(int i = 0; i < doubledRow; ++i)
     {
         newMap[i] = new char[doubledCol] {};        
     }
@@ -370,22 +371,8 @@ bool doMonsterAttack(char** map, int maxRow, int maxCol, const Player& player)
         } 
         else if(map[row][player.col] == TILE_MONSTER) // In sight by monster
         { 
-            if(map[player.row - 1][player.col] == TILE_MONSTER) // Check if the player is visible 
-            { 
-                reachedCharacter = true;
-                map[player.row - 1][player.col] = TILE_OPEN;
-                map[player.row][player.col] = TILE_MONSTER;
-
-                return reachedCharacter;
-            } 
-            else if(map[row + 1][player.col] != TILE_PLAYER)
-            {
-                map[row][player.col] = TILE_OPEN;
-                map[row + 1][player.col] = TILE_MONSTER;
-                
-                reachedCharacter = false;
-                //return reachedCharacter;
-            }
+            map[row][player.col] = TILE_OPEN;
+            map[row + 1][player.col] = TILE_MONSTER;
         }
     }
     // Check from below the player's location
@@ -398,22 +385,8 @@ bool doMonsterAttack(char** map, int maxRow, int maxCol, const Player& player)
         } 
         else if(map[row][player.col] == TILE_MONSTER)// In sight by monster
         {
-            if(map[player.row + 1][player.col] == TILE_MONSTER) // Check if the player is visible to this monster
-            {
-                reachedCharacter = true;
-                map[player.row + 1][player.col] = TILE_OPEN;
-                map[player.row][player.col] = TILE_MONSTER;
-
-                return reachedCharacter;
-            } 
-            else if(map[row - 1][player.col] != TILE_PLAYER)
-            {
-                map[row][player.col] = TILE_OPEN;
-                map[row - 1][player.col] = TILE_MONSTER;
-                
-                reachedCharacter = false;
-                //return reachedCharacter;
-            }
+            map[row][player.col] = TILE_OPEN;
+            map[row - 1][player.col] = TILE_MONSTER;
         }
     }
     // Check Left of player's location
@@ -426,22 +399,8 @@ bool doMonsterAttack(char** map, int maxRow, int maxCol, const Player& player)
         }
         else if(map[player.row][col] == TILE_MONSTER)
         {
-            if(map[player.row][player.col - 1] == TILE_MONSTER)
-            {
-                reachedCharacter = true;
-                map[player.row][player.col - 1] = TILE_OPEN;
-                map[player.row][player.col] = TILE_MONSTER;
-
-                return reachedCharacter;
-            }
-            else if(map[player.row][col + 1] != TILE_PLAYER)
-            {                
-                map[player.row][col] = TILE_OPEN; 
-                map[player.row][col + 1] = TILE_MONSTER;                
-            
-                reachedCharacter = false;
-                //return reachedCharacter;
-            }
+            map[player.row][col] = TILE_OPEN; 
+            map[player.row][col + 1] = TILE_MONSTER; 
         }
     }
     // Check Right of player's position
@@ -454,25 +413,17 @@ bool doMonsterAttack(char** map, int maxRow, int maxCol, const Player& player)
         }
         else if(map[player.row][col] == TILE_MONSTER)
         {
-            if(map[player.row][player.col + 1] == TILE_MONSTER)
-            {
-                reachedCharacter = true;
-                map[player.row][player.col - 1] = TILE_OPEN;
-                map[player.row][player.col] = TILE_MONSTER;
-
-                return reachedCharacter;
-            }
-            else if(map[player.row][col - 1] != TILE_PLAYER)
-            {
-                map[player.row][col] = TILE_OPEN; 
-                map[player.row][col - 1] = TILE_MONSTER;                
-            
-                reachedCharacter = false;
-                //return reachedCharacter;
-            }
+            map[player.row][col] = TILE_OPEN; 
+            map[player.row][col - 1] = TILE_MONSTER;                
         }
     }
 
+    if(map[player.row][player.col] == TILE_MONSTER)
+    {
+        reachedCharacter = true;
+
+        return reachedCharacter;
+    }
 
     return reachedCharacter;
     
