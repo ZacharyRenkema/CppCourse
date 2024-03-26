@@ -46,9 +46,9 @@ char** loadLevel(const string& fileName, int& maxRow, int& maxCol, Player& playe
     }
     //Load Level
     char** levelMap = createMap(maxRow, maxCol);
-    for(size_t row = 0; row < maxRow; row++)
+    for(int row = 0; row < maxRow; row++)
     {
-        for(size_t col = 0; col < maxCol; col++)
+        for(int col = 0; col < maxCol; col++)
         {
             // Read character from file
             char tile;
@@ -128,10 +128,10 @@ void getDirection(char input, int& nextRow, int& nextCol)
 char** createMap(int maxRow, int maxCol) 
 {
     char** levelMap = new char*[maxRow];
-    for(size_t i = 0; i < maxRow; ++i)
+    for(int i = 0; i < maxRow; ++i)
     {
         levelMap[i] = new char[maxCol];
-        for(size_t j = 0; j < maxCol; ++j)
+        for(int j = 0; j < maxCol; ++j)
         {
             levelMap[i][j] = TILE_OPEN;
         }
@@ -152,7 +152,7 @@ void deleteMap(char**& map, int& maxRow) {
     //Deallocate Memory
     if(map != nullptr)
     {
-        for(size_t row = 0; row < maxRow; ++row)
+        for(int row = 0; row < maxRow; ++row)
         {
             delete[] map[row];
         }
@@ -198,9 +198,9 @@ char** resizeMap(char** map, int& maxRow, int& maxCol)
             newMap[j][k] = map[j][k];       
         }   
     }
-    for (int i = 0; i < maxRow; ++i) //B
+    for(int i = 0; i < maxRow; ++i) //B
     {
-        for (int j = maxCol; j < doubledCol; ++j) 
+        for(int j = maxCol; j < doubledCol; ++j) 
         {
             newMap[i][j] = map[i][j - maxCol];
 
@@ -210,9 +210,9 @@ char** resizeMap(char** map, int& maxRow, int& maxCol)
             } 
         }
     }
-    for (int i = maxRow; i < doubledRow; ++i) //C
+    for(int i = maxRow; i < doubledRow; ++i) //C
     {
-        for (int j = 0; j < maxCol; ++j) 
+        for(int j = 0; j < maxCol; ++j) 
         {
             newMap[i][j] = map[i - maxRow][j];
 
@@ -222,9 +222,9 @@ char** resizeMap(char** map, int& maxRow, int& maxCol)
             }
         }
     }
-    for (int i = maxRow; i < doubledRow; ++i) 
+    for(int i = maxRow; i < doubledRow; ++i) 
     {
-        for (int j = maxCol; j < doubledCol; ++j) 
+        for(int j = maxCol; j < doubledCol; ++j) 
         {
             newMap[i][j] = newMap[i - maxRow][j - maxCol];
 
@@ -234,7 +234,8 @@ char** resizeMap(char** map, int& maxRow, int& maxCol)
             }
         }
     }
-    deleteMap(map, maxRow); //Delete oldMap
+    //Delete oldMap
+    deleteMap(map, maxRow);
     maxRow = doubledRow;
     maxCol = doubledCol;
     map = newMap; //point map to newMap
@@ -262,23 +263,20 @@ char** resizeMap(char** map, int& maxRow, int& maxCol)
  */
 int doPlayerMove(char** map, int maxRow, int maxCol, Player& player, int nextRow, int nextCol) 
 {
-    //Check if player is within boundaries
+    // Check if player is within boundaries
     if (nextRow < 0 || nextRow >= maxRow || nextCol < 0 || nextCol >= maxCol) 
     {       
         return STATUS_STAY;
     } 
-    //Check if player hits pillar or monster (row)
-    if((map[nextRow][player.col] == TILE_PILLAR) || (map[nextRow][player.col] == TILE_MONSTER))
+
+    // Check if next position is a pillar or a monster
+    if(map[nextRow][nextCol] == TILE_PILLAR || map[nextRow][nextCol] == TILE_MONSTER)
     {
         return STATUS_STAY;
     }
-    //Check if player hits pillar or monster (col)
-    if((map[player.row][nextCol] == TILE_PILLAR) || (map[player.row][nextCol] == TILE_MONSTER))
-    {
-        return STATUS_STAY;
-    }
-    //If treasure is next
-    if((map[nextRow][player.col] == TILE_TREASURE) || (map[player.row][nextCol] == TILE_TREASURE))
+
+    // Check if next position is a treasure
+    if(map[nextRow][nextCol] == TILE_TREASURE)
     {
         map[player.row][player.col] = TILE_OPEN;
         player.row = nextRow;
@@ -288,8 +286,9 @@ int doPlayerMove(char** map, int maxRow, int maxCol, Player& player, int nextRow
 
         return STATUS_TREASURE;
     }
-    //If amulet is next
-    if((map[nextRow][player.col] == TILE_AMULET) || (map[player.row][nextCol] == TILE_AMULET))
+
+    // Check if next position is an amulet
+    if(map[nextRow][nextCol] == TILE_AMULET)
     {
         map[player.row][player.col] = TILE_OPEN;
         player.row = nextRow;
@@ -298,23 +297,46 @@ int doPlayerMove(char** map, int maxRow, int maxCol, Player& player, int nextRow
 
         return STATUS_AMULET;
     }
-    if((map[nextRow][player.col] == TILE_DOOR) || (map[player.row][nextCol] == TILE_DOOR))
+
+    // Check if next position is a door
+    if(map[nextRow][nextCol] == TILE_DOOR)
     {
+        map[player.row][player.col] = TILE_OPEN;
+        player.row = nextRow;
+        player.col = nextCol;
+        map[player.row][player.col] = TILE_PLAYER;
+
         return STATUS_LEAVE;
     }
-    if((map[nextRow][player.col] == TILE_EXIT) || (map[player.row][nextCol] == TILE_EXIT))
+
+    // Check if next position is an exit
+    if(map[nextRow][nextCol] == TILE_EXIT)
     {
-        return STATUS_ESCAPE;
+        if(player.treasure == 0)
+        {
+            return STATUS_STAY;
+        }
+        else
+        {
+            map[player.row][player.col] = TILE_OPEN;
+            player.row = nextRow;
+            player.col = nextCol;
+            map[player.row][player.col] = TILE_PLAYER;
+
+            return STATUS_ESCAPE;
+        }
     }
-    
-    //Clear to Move
+
+    // If none of the above, it's a clear move
     map[player.row][player.col] = TILE_OPEN;
     player.row = nextRow;
     player.col = nextCol;
     map[player.row][player.col] = TILE_PLAYER;
 
+
     return STATUS_MOVE;
 }
+
 
 /**
  * TODO: Student implement this function
@@ -331,6 +353,127 @@ int doPlayerMove(char** map, int maxRow, int maxCol, Player& player, int nextRow
  * @return  Boolean value indicating player status: true if monster reaches the player, false if not.
  * @update map contents
  */
-bool doMonsterAttack(char** map, int maxRow, int maxCol, const Player& player) {
-    return false;
+bool doMonsterAttack(char** map, int maxRow, int maxCol, const Player& player) 
+{
+    
+    bool reachedCharacter = false;
+    int row = player.row;
+    int col = player.col;
+
+    //Check from above the player's location
+    for(row = player.row - 1; row >= 0; --row) 
+    {
+        if(map[row][player.col] == TILE_PILLAR) // Out of sight
+        { 
+            reachedCharacter = false;
+            break;
+        } 
+        else if(map[row][player.col] == TILE_MONSTER) // In sight by monster
+        { 
+            if(map[player.row - 1][player.col] == TILE_MONSTER) // Check if the player is visible 
+            { 
+                reachedCharacter = true;
+                map[player.row - 1][player.col] = TILE_OPEN;
+                map[player.row][player.col] = TILE_MONSTER;
+
+                return reachedCharacter;
+            } 
+            else if(map[row + 1][player.col] != TILE_PLAYER)
+            {
+                map[row][player.col] = TILE_OPEN;
+                map[row + 1][player.col] = TILE_MONSTER;
+                
+                reachedCharacter = false;
+                //return reachedCharacter;
+            }
+        }
+    }
+    // Check from below the player's location
+    for(row = player.row + 1; row < maxRow; ++row) 
+    {
+        if(map[row][player.col] == TILE_PILLAR) // Out of sight 
+        {
+            reachedCharacter = false;
+            break;
+        } 
+        else if(map[row][player.col] == TILE_MONSTER)// In sight by monster
+        {
+            if(map[player.row + 1][player.col] == TILE_MONSTER) // Check if the player is visible to this monster
+            {
+                reachedCharacter = true;
+                map[player.row + 1][player.col] = TILE_OPEN;
+                map[player.row][player.col] = TILE_MONSTER;
+
+                return reachedCharacter;
+            } 
+            else if(map[row - 1][player.col] != TILE_PLAYER)
+            {
+                map[row][player.col] = TILE_OPEN;
+                map[row - 1][player.col] = TILE_MONSTER;
+                
+                reachedCharacter = false;
+                //return reachedCharacter;
+            }
+        }
+    }
+    // Check Left of player's location
+    for(col = player.col - 1; col >= 0; --col)
+    {
+        if(map[player.row][col] == TILE_PILLAR)
+        {
+            reachedCharacter = false;
+            break;
+        }
+        else if(map[player.row][col] == TILE_MONSTER)
+        {
+            if(map[player.row][player.col - 1] == TILE_MONSTER)
+            {
+                reachedCharacter = true;
+                map[player.row][player.col - 1] = TILE_OPEN;
+                map[player.row][player.col] = TILE_MONSTER;
+
+                return reachedCharacter;
+            }
+            else if(map[player.row][col + 1] != TILE_PLAYER)
+            {                
+                map[player.row][col] = TILE_OPEN; 
+                map[player.row][col + 1] = TILE_MONSTER;                
+            
+                reachedCharacter = false;
+                //return reachedCharacter;
+            }
+        }
+    }
+    // Check Right of player's position
+    for(col = player.col + 1; col < maxCol; ++col)
+    {
+        if(map[player.row][col] == TILE_PILLAR)
+        {
+            reachedCharacter = false;
+            break;
+        }
+        else if(map[player.row][col] == TILE_MONSTER)
+        {
+            if(map[player.row][player.col + 1] == TILE_MONSTER)
+            {
+                reachedCharacter = true;
+                map[player.row][player.col - 1] = TILE_OPEN;
+                map[player.row][player.col] = TILE_MONSTER;
+
+                return reachedCharacter;
+            }
+            else if(map[player.row][col - 1] != TILE_PLAYER)
+            {
+                map[player.row][col] = TILE_OPEN; 
+                map[player.row][col - 1] = TILE_MONSTER;                
+            
+                reachedCharacter = false;
+                //return reachedCharacter;
+            }
+        }
+    }
+
+
+    return reachedCharacter;
+    
 }
