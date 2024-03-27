@@ -36,29 +36,19 @@ void prep_string_array(char ary[][STRING_SIZE]);
 int main()
 {
     // TODO: create arrays needed
-    double time[SIZE] = {0.0};
-    unsigned int jerseyNumber[SIZE] = {0};
-    unsigned int ranking[SIZE] = {0};
-    char country = 'N/A';
-    char lastName = 'N/A';
+    double time[SIZE];
+    unsigned int jerseyNumber[SIZE];
+    unsigned int ranking[SIZE];
+    char country[SIZE][STRING_SIZE];
+    char lastName[SIZE][STRING_SIZE];
 
+    prep_double_array(time);
+    prep_unsigned_int_array(jerseyNumber);
+    prep_unsigned_int_array(ranking);
+    prep_string_array(country);
+    prep_string_array(lastName);
+    
     //Prep Ints
-    for(int i = 0; i <= SIZE; i++)
-    {
-        prep_unsigned_int_array(jerseyNumber);
-        prep_unsigned_int_array(ranking);
-    }
-    //C-String Prep
-    for(int j = 0; j <= STRING_SIZE; j++)
-    {
-        prep_string_array(country);
-        prep_string_array(lastName);
-    }
-    //Double Prep
-    for(int k = 0; k <= SIZE; k++)
-    {
-        prep_double_array(time);
-    }
   
     //std::cout << time[1];
 

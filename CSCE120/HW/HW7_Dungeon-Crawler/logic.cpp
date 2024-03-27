@@ -426,5 +426,4 @@ bool doMonsterAttack(char** map, int maxRow, int maxCol, const Player& player)
     }
 
     return reachedCharacter;
-    
 }

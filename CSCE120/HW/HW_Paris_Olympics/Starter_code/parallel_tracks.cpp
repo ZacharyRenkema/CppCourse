@@ -20,10 +20,10 @@ void prep_double_array(double ary[])
 // making sure all values within the array are set to 0.0;
 {
   //TODO
-  for(int i = 0; i <= SIZE; i++)
-  {
-	ary[i] = {0.0};
-  }
+	for(int i = 0; i < SIZE; ++i)
+	{
+		ary[i] = 0.0;
+	}
 }
 
 //-------------------------------------------------------
@@ -37,9 +37,8 @@ void prep_unsigned_int_array(unsigned int ary[])
   //TODO
   for(int i = 0; i <= SIZE; i++)
   {
-	ary[i] = {0};
+	ary[i] = 0;
   }
-
 }
 
 //-------------------------------------------------------
@@ -51,9 +50,12 @@ void prep_string_array(char ary[][STRING_SIZE])
 // making sure all values within the array are set to "N/A";
 {
 	//TODO
-	for(int i = 0; i <= SIZE; i++)
+	for(int i = 0; i < SIZE; ++i)
 	{
-		ary[i][STRING_SIZE] = '\0';
+		for(int j = 0; j < STRING_SIZE; ++j)
+		{
+			ary[i][j] = "N/A";
+		}
 	}
 } 
 
