@@ -41,28 +41,30 @@ int main()
     unsigned int ranking[SIZE];
     char country[SIZE][STRING_SIZE];
     char lastName[SIZE][STRING_SIZE];
-
+    // TOTO: prep all arrays
     prep_double_array(time);
     prep_unsigned_int_array(jerseyNumber);
     prep_unsigned_int_array(ranking);
     prep_string_array(country);
     prep_string_array(lastName);
-    
-    //Prep Ints
-  
-    //std::cout << time[1];
-
-    // TOTO: prep all arrays
 	
     // TODO: load the runner's data into the array
 
     // if unable to load runner data
     //   1) output "Bad input" to standard out
     //   2) exit program by returning 1
+    if (get_runner_data(time, country, jerseyNumber, lastName) == false) 
+    {
+        std::cout << "Bad input" << std::endl;
 
+
+        return 1;
+    }
     // TODO: determine ranking, notice the rank array receives the results
+    //get_ranking(time, ranking);
 
     // TODO: Output results
+    print_results(time, country, lastName, jerseyNumber);
 
     // this is not required in C++ but many people still explitly add it
     return 0; 
